@@ -22,11 +22,9 @@ export default class CDDLVisualization extends Component {
       .setInstances(INSTANCES)
       .setProportions(this.get('proportions'))
       .onClick(function() {
-        console.log('did click', arguments);
+
       }, canvas);
 
     glModule();
-
-    // glModule.separateByCat(true)
   }
 }
