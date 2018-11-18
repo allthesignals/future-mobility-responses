@@ -44,6 +44,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV['rootURL'] = '/future-mobility-responses';
     // here you can enable a production-specific feature
   }
 
