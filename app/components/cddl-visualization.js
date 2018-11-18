@@ -1,15 +1,17 @@
 import Component from '@ember/component';
 import cddl from 'cddl';
+import { classNames } from '@ember-decorators/component';
 
 const INSTANCES = 4000;
 
+@classNames('gl-container')
 export default class CDDLVisualization extends Component {
+  proportions;
+
   didInsertElement(...params) {
     super.didInsertElement(...params);
 
-    console.log(cddl);
-
-    const container = document.querySelector('.gl-container');
+    const container = this.element;
     const canvas = container.appendChild(document.createElement('canvas'));
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
@@ -18,8 +20,9 @@ export default class CDDLVisualization extends Component {
     const glModule = cddl(gl, canvas)
       .setSize([canvas.width, canvas.height])
       .setInstances(INSTANCES)
+      .setProportions(this.get('proportions'))
       .onClick(function() {
-        console.log('did click');
+        console.log('did click', arguments);
       }, canvas);
 
     glModule();
