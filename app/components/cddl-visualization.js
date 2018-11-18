@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import GLModule from 'cddl';
+import GLModule from '../gl';
 import { classNames } from '@ember-decorators/component';
 
 const INSTANCES = 4000;
@@ -26,5 +26,7 @@ export default class CDDLVisualization extends Component {
       }, canvas);
 
     glModule();
+
+    // glModule.separateByCat(true)
   }
 }
