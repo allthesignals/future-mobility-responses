@@ -3,7 +3,7 @@
   <div class="circle-nav-panel"></div>
   <ul class="circle-nav-menu">
     {{#each categories as |category index|}}
-      {{#link-to 'categories' index}}
+      {{#link-to 'questions' index}}
         <li class="circle-nav-item circle-nav-item-{{index}}" id={{category}}></li>
       {{/link-to}}
     {{/each}}

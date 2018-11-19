@@ -18,6 +18,8 @@ export default class CDDLVisualization extends Component {
 
   questionCounts;
 
+  visualizationEnabled;
+
   glModule;
 
   handleClick() {}
@@ -43,7 +45,9 @@ export default class CDDLVisualization extends Component {
         this.handleClick(...args);
       }, canvas);
 
-    glModule();
+    if (this.get('visualizationEnabled')) {
+      glModule();
+    }
 
     this.set('glModule', glModule);
   }

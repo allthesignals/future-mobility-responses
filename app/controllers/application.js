@@ -1,7 +1,11 @@
 import Controller from '@ember/controller';
 
 export default class ApplicationController extends Controller {
-  visualizationEnabled;
+  constructor(...args) {
+    super(...args);
 
-  queryParams = ['visualizationEnabled'];
+    this.queryParams = [{ visualizationEnabled: { type: 'boolean' } }];
+  }
+
+  visualizationEnabled = true;
 }
