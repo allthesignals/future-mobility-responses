@@ -1,13 +1,25 @@
 import Component from '@ember/component';
 import { computed } from '@ember-decorators/object';
+import { service } from '@ember-decorators/service';
+import { mapBy } from '@ember-decorators/object/computed';
 import GLModule from '../gl';
 
 const INSTANCES = 4000;
 
 export default class CDDLVisualization extends Component {
-  proportions;
+  @service
+  router;
+
+  questionCounts;
+
+  @mapBy('questionCounts', 'total')
+  proportions
 
   glModule;
+
+  handleClick(id, category) {
+    this.get('router').transitionTo('categories', category);
+  }
 
   didInsertElement(...params) {
     super.didInsertElement(...params);
@@ -22,8 +34,8 @@ export default class CDDLVisualization extends Component {
       .setSize([canvas.width, canvas.height])
       .setInstances(INSTANCES)
       .setProportions(this.get('proportions'))
-      .onClick(function() {
-
+      .onClick((...args) => {
+        this.handleClick(...args);
       }, canvas);
 
     glModule();
