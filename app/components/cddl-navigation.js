@@ -2,8 +2,14 @@ import Component from '@ember/component';
 import jQuery from 'jquery';
 
 export default class CddlNavigationComponent extends Component {
+  toggleCategorization;
+
+  isCategorized = false;
+
   init(...args) {
     super.init(...args);
+
+    const componentContext = this;
 
     // TODO: this should be handled in an initializer somewhere else
     !function(e) {
@@ -25,7 +31,9 @@ export default class CddlNavigationComponent extends Component {
                     opacity: l.overlayOpacity,
                     "z-index": "-1",
                     display: "none"
-                })), e(".circle-nav-toggle, .circle-nav-overlay").on("click", function() {
+                })), e(".circle-nav-toggle, .circle-nav-overlay").on("click", () => {
+                    componentContext.toggleProperty('isCategorized');
+                    componentContext.get('toggleCategorization')(componentContext.get('isCategorized'));
                     o.stop().toggleClass("circle-nav-open"), c.stop().toggleClass("circle-nav-open"), a.stop().toggleClass("circle-nav-open"), n.stop().toggleClass("circle-nav-open"), e(".circle-nav-overlay").fadeToggle(), e("body").css("overflow") ? e("body, html").css("overflow", "") : e("body, html").css("overflow", "hidden")
                 })
             })
@@ -42,7 +50,7 @@ export default class CddlNavigationComponent extends Component {
 
     jQuery("#circle-nav-wrapper").circleNav();
 
-    jQuery("#toggle").click(function(){
+    jQuery("#toggle").click(() => {
       jQuery("#pie_color").toggleClass('hidden');
       jQuery(".answer-container").addClass('hidden');
       jQuery(".container").removeClass('hidden');
@@ -50,17 +58,17 @@ export default class CddlNavigationComponent extends Component {
       jQuery('.answer-container div').removeClass('selected');
       jQuery("#car-container div").removeClass('container-shift');
     });
-    jQuery('.circle-nav-item').click(function(){
+    jQuery('.circle-nav-item').click(() => {
       jQuery('.container').addClass('hidden');
       jQuery('.card-placeholder').addClass('hidden');
       jQuery('.answer-container div').removeClass('selected');
       jQuery("#car-container div").removeClass('container-shift');
     });
-    jQuery('#car').click(function(){
+    jQuery('#car').click(() => {
       jQuery('.answer-container').addClass('hidden');
       jQuery('#car-container').toggleClass('hidden');
     });
-    jQuery("#car-container div").click(function(){
+    jQuery("#car-container div").click(() => {
       jQuery("#car-container div").addClass('container-shift');
       jQuery("#car-container div").removeClass('selected');
       jQuery('.card-placeholder').addClass('hidden');
