@@ -4,7 +4,11 @@ import { service } from '@ember-decorators/service';
 import { mapBy } from '@ember-decorators/object/computed';
 import GLModule from '../gl';
 
-const INSTANCES = 4000;
+const INSTANCES = 3000;
+
+const RADIAL = 0.3;
+const ANGULAR = 0.4;
+const DECAY = 0.009;
 
 export default class CDDLVisualization extends Component {
   @service
@@ -25,6 +29,7 @@ export default class CDDLVisualization extends Component {
     super.didInsertElement(...params);
 
     const container = this.element.querySelector('.gl-container');
+    const PROPORTIONS = this.get('proportions');
     const canvas = container.appendChild(document.createElement('canvas'));
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
@@ -33,7 +38,10 @@ export default class CDDLVisualization extends Component {
     const glModule = GLModule(gl, canvas)
       .setSize([canvas.width, canvas.height])
       .setInstances(INSTANCES)
-      .setProportions(this.get('proportions'))
+      .setProportions(PROPORTIONS)
+      .setMotionRadial(RADIAL)
+      .setMotionAngular(ANGULAR)
+      .setDecay(DECAY)
       .onClick((...args) => {
         this.handleClick(...args);
       }, canvas);
