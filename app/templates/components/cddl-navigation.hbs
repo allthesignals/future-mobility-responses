@@ -2,15 +2,10 @@
   <div class="circle-nav-toggle" id="toggle" {{action 'handleToggleClick'}}><i class="material-icons">add</i></div>
   <div class="circle-nav-panel"></div>
   <ul class="circle-nav-menu">
-    <li class="circle-nav-item circle-nav-item-1" id="car"></li>
-    <li class="circle-nav-item circle-nav-item-2" id="commute"></li>
-    <li class="circle-nav-item circle-nav-item-3" id="people"></li>
-    <li class="circle-nav-item circle-nav-item-4" id="environ"></li>
-    <li class="circle-nav-item circle-nav-item-5" id="safety"></li>     
-    <li class="circle-nav-item circle-nav-item-6" id="ethics"></li>
-    <li class="circle-nav-item circle-nav-item-7" id="money"></li>
-    <li class="circle-nav-item circle-nav-item-8" id="time"></li>
-    <li class="circle-nav-item circle-nav-item-9" id="robots"></li>
-    <li class="circle-nav-item circle-nav-item-10" id="time"></li>
+    {{#each categories as |category index|}}
+      {{#link-to 'categories' index}}
+        <li class="circle-nav-item circle-nav-item-{{index}}" id={{category}}></li>
+      {{/link-to}}
+    {{/each}}
   </ul>
 </nav>

@@ -5,7 +5,6 @@ import { mapBy } from '@ember-decorators/object/computed';
 import GLModule from '../gl';
 
 const INSTANCES = 3000;
-
 const RADIAL = 0.3;
 const ANGULAR = 0.4;
 const DECAY = 0.009;
@@ -14,16 +13,14 @@ export default class CDDLVisualization extends Component {
   @service
   router;
 
-  questionCounts;
-
   @mapBy('questionCounts', 'total')
-  proportions
+  proportions;
+
+  questionCounts;
 
   glModule;
 
-  handleClick(id, category) {
-    this.get('router').transitionTo('categories', category);
-  }
+  handleClick() {}
 
   didInsertElement(...params) {
     super.didInsertElement(...params);

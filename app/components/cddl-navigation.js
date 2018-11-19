@@ -2,7 +2,22 @@ import Component from '@ember/component';
 import jQuery from 'jquery';
 import { action } from '@ember-decorators/object';
 
+const CATEGORIES = [
+  'car',
+  'commute',
+  'people',
+  'environ',
+  'safety',
+  'ethics',
+  'money',
+  'time',
+  'robots',
+  'time',
+];
+
 export default class CddlNavigationComponent extends Component {
+  categories = CATEGORIES;
+
   isSortedByCategory;
 
   @action
@@ -22,7 +37,7 @@ export default class CddlNavigationComponent extends Component {
         const a = jQuery(".circle-nav-panel");
         const n = jQuery(".circle-nav-menu");
 
-        const shouldRender = l.hasOverlay && (jQuery(".circle-nav-overlay").length === 0);
+        const shouldRender = true;
 
         if (shouldRender) {
           jQuery("body")
