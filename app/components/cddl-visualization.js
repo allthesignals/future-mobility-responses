@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { action } from '@ember-decorators/object';
+import { computed } from '@ember-decorators/object';
 import GLModule from '../gl';
 
 const INSTANCES = 4000;
@@ -31,8 +31,14 @@ export default class CDDLVisualization extends Component {
     this.set('glModule', glModule);
   }
 
-  @action
-  toggleCategorization(boolean) {
+  _isSortedByCategory = false;
+
+  @computed('')
+  get isSortedByCategory() {
+    return this.get('_isSortedByCategory');
+  }
+  set isSortedByCategory(boolean) {
     this.get('glModule').separateByCat(boolean);
+    this.set('_isSortedByCategory', boolean);
   }
 }
