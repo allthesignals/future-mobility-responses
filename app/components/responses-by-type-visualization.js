@@ -10,8 +10,9 @@ import { service } from '@ember-decorators/service';
 const CARD_STYLE = {
   stroke: 'rgb(0,0,0)',
   fill: 'red',
-  width: 10,
-  height: 20,
+  width: '10px',
+  height: '20px',
+  cursor: 'pointer',
 };
 
 @tagName('svg')

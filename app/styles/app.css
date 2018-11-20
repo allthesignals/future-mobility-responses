@@ -271,6 +271,7 @@ ul li {
 .question-responses-container {
   text-align: center;
   width: 100%;
+  z-index: 9999999;
 }
 
 .response-type-label {
@@ -316,4 +317,9 @@ ul li {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.response-rectangle:hover {
+  stroke-width: 3px;
+  stroke: darkred;
 }
