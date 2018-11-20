@@ -14,7 +14,9 @@ const CATEGORIES = [
   'time',
   'robots',
   'time',
-];
+].map((cat, index) => {
+  return { label: cat, id: index + 2 };
+});
 
 @classNames('cddl-navigation')
 export default class CddlNavigationComponent extends Component {

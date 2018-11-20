@@ -1,11 +1,12 @@
+{{log scaledAnswers}}
+
 {{#animated-container}}
-  {{#animated-value 'questions-route'
+  {{#animated-value model
     initialInsertion=true
-    finalRemoval=true
     use=transition
     duration=500}}
     <div class="question-responses-container">
-      {{#each model as |questionType|}}
+      {{#each scaledAnswers as |questionType|}}
         <div class='answer-container'>
           {{questionType.a_text}}
 

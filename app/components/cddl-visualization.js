@@ -24,6 +24,8 @@ export default class CDDLVisualization extends Component {
 
   glModule;
 
+  questionCounts;
+
   handleClick() {}
 
   didInsertElement(...params) {

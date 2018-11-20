@@ -6,8 +6,14 @@ const { host } = environment;
 
 export default class CategoriesRoute extends Route {
   model({ id }) {
-    return fetch(`${host}/qacount/?format=json`)
-      .then(blob => blob.json())
-      .then(data => data.filterBy('q_id', parseInt(id)));
+    const { answers } = this.modelFor('application');
+
+    const min = Math.min(...answers.mapBy('total'));
+    const max = Math.max(...answers.mapBy('total'));
+
+    return {
+      answers: answers.filterBy('q_id', parseInt(id)),
+      meta: { min, max },
+    };
   }
 }
