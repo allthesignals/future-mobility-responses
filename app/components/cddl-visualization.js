@@ -3,6 +3,7 @@ import { computed } from '@ember-decorators/object';
 import { service } from '@ember-decorators/service';
 import { mapBy } from '@ember-decorators/object/computed';
 import { classNames } from '@ember-decorators/component';
+import { CATEGORIES as categoryLookup } from './cddl-navigation';
 import GLModule from '../gl';
 
 const INSTANCES = 3000;
@@ -26,7 +27,13 @@ export default class CDDLVisualization extends Component {
 
   questionCounts;
 
-  handleClick() {}
+  handleClick(index, category) {
+    const { id } = categoryLookup
+      .find((cat, index) => index === category);
+
+    this.get('router')
+      .transitionTo('questions.card', id, Math.random());
+  }
 
   didInsertElement(...params) {
     super.didInsertElement(...params);
