@@ -271,7 +271,6 @@ ul li {
 .question-responses-container {
   text-align: center;
   width: 100%;
-  z-index: 9999999;
 }
 
 .response-type-label {
