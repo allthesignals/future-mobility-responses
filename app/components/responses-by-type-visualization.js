@@ -3,6 +3,9 @@ import { tagName } from '@ember-decorators/component';
 import { attribute } from '@ember-decorators/component';
 import { computed } from '@ember-decorators/object';
 import { htmlSafe } from '@ember/string';
+import { classNames } from '@ember-decorators/component';
+import { action } from '@ember-decorators/object';
+import { service } from '@ember-decorators/service';
 
 const CARD_STYLE = {
   stroke: 'rgb(0,0,0)',
@@ -12,7 +15,13 @@ const CARD_STYLE = {
 };
 
 @tagName('svg')
+@classNames('responses-by-type-visualization')
 export default class ResponsesByTypeVisualizationComponent extends Component {
+  @service
+  router;
+
+  model;
+
   responses;
 
   @computed('responses.[]')
@@ -33,10 +42,16 @@ export default class ResponsesByTypeVisualizationComponent extends Component {
   }
 
   @attribute
-  width = 200;
+  width = 120;
 
   @attribute
-  height = 200;
+  height = 130;
+
+  @action
+  handleRectClick(id) {
+    const TEMP_ID_REPLACE_ME = Math.random();
+    this.get('router').transitionTo('questions.card', id, TEMP_ID_REPLACE_ME);
+  }
 }
 
 // object to HTML style string

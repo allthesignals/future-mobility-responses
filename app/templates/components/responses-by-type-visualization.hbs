@@ -1,5 +1,6 @@
-{{#each rectangles as |rectangle|}}
+{{#each rectangles as |rectangle index|}}
   <rect x={{rectangle.x}}
     y={{rectangle.y}}
-    style={{generatedStyle}} />
+    style={{generatedStyle}}
+    {{action 'handleRectClick' model.q_id index}} />
 {{/each}}
