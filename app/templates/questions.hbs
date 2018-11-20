@@ -1,20 +1,20 @@
-{{log scaledAnswers}}
+<div class="questions-container">
+  {{#animated-container}}
+    {{#animated-value model
+      initialInsertion=true
+      use=transition
+      duration=500}}
+      <div class="question-responses-container">
+        {{#each scaledAnswers as |questionType|}}
+          <div class='answer-container'>
+            {{questionType.a_text}}
 
-{{#animated-container}}
-  {{#animated-value model
-    initialInsertion=true
-    use=transition
-    duration=500}}
-    <div class="question-responses-container">
-      {{#each scaledAnswers as |questionType|}}
-        <div class='answer-container'>
-          {{questionType.a_text}}
+            {{responses-by-type-visualization responses=questionType.total}}
+          </div>
+        {{/each}}
+      </div>
+    {{/animated-value}}
+  {{/animated-container}}
 
-          {{responses-by-type-visualization responses=questionType.total}}
-        </div>
-      {{/each}}
-    </div>
-  {{/animated-value}}
-{{/animated-container}}
-
-{{outlet}}
+  {{outlet}}
+</div>

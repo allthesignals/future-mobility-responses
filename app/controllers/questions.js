@@ -11,12 +11,11 @@ export default class QuestionsController extends Controller {
   @computed('model.answers')
   get scaledAnswers() {
     const { answers, meta: { min, max } } = this.get('model');
-    console.log(min, max);
     const scale = scaleLinear()
         .domain([min, max])
         .rangeRound([1, UPPER_SCALE]);
 
-    return this.get('model.answers')
+    return answers
       .map((answer) => ({ ...answer, total: scale(answer.total) }));
   }
 

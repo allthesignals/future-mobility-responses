@@ -3,6 +3,7 @@ import jQuery from 'jquery';
 import { action } from '@ember-decorators/object';
 import { classNames } from '@ember-decorators/component';
 
+// css name map. TODO: refactor to be data-driven
 const CATEGORIES = [
   'car',
   'commute',
