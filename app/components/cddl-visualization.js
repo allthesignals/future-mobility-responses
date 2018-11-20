@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember-decorators/object';
 import { service } from '@ember-decorators/service';
 import { mapBy } from '@ember-decorators/object/computed';
+import { classNames } from '@ember-decorators/component';
 import GLModule from '../gl';
 
 const INSTANCES = 3000;
@@ -9,6 +10,7 @@ const RADIAL = 0.3;
 const ANGULAR = 0.4;
 const DECAY = 0.009;
 
+@classNames('cddl-visualization')
 export default class CDDLVisualization extends Component {
   @service
   router;

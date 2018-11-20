@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'future-mobility-responses',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     host: 'https://ehuntley.media.mit.edu',
     EmberENV: {
       FEATURES: {
