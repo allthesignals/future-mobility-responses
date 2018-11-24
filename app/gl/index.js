@@ -76,7 +76,13 @@ function GLModule(gl){
     gl.viewport(0, 0, _w, _h);
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    //Testing out different blending functions
+    //gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    //gl.blendFunc(gl.ONE, gl.ONE);
+    //gl.blendFunc(gl.SRC_ALPHA, gl.DST_COLOR);
+    gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
+
 
     //Update uniform values
     gl.useProgram(program);
@@ -167,9 +173,9 @@ function GLModule(gl){
     target.addEventListener('click', function(e){
       //Basic logic
       //Render to an offscreen canvas with unique colors for each instance
-       gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer); //render to off screen framebuffer
-       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-       gl.useProgram(program);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer); //render to off screen framebuffer
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(program);
       gl.uniform1f(uUsePickingColorLocation, 1.0); //render pass does not use pickingColor
       gl.bindVertexArray(vaos[sourceIdx]);
       gl.vertexAttribDivisor(OFFSET_LOCATION, 1);
@@ -312,9 +318,7 @@ function GLModule(gl){
     let offsets;
     if(byCategory){
       //cards are separated by category
-      const proportionAngles = pie().padAngle(0.3).sortValues(null)(_proportions);
-      //offsets = new Float32Array( pieLayout(_instances, _w, _h, _categories, _proportions) );
-      offsets = new Float32Array( columnsLayout(_instances, _w, _h, _categories, _proportions) );
+      offsets = new Float32Array( pieLayout(_instances, _w, _h, _categories, _proportions) );
     }else{
       //cards are all mixed up in this case
       offsets = new Float32Array( pieLayout(_instances, _w, _h) );
