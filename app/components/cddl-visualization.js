@@ -54,16 +54,24 @@ export default class CDDLVisualization extends Component {
 
   glModule;
 
-  questionCounts;
-
-  handleClick(index, category) {
-    console.log(...arguments);
+  handleClick(index, cat_index) {
     // TODO: route to a real id
-    // const { id } = categoryLookup
-    //   .find((cat, index) => index === category);
+    const { answers } = this.get('questionCounts');
+    const category = cat_index + 3;
 
-    // this.get('router')
-    //   .transitionTo('questions.card', id);
+    const combinedAnswers = answers
+      .filter(({ q_id }) => q_id === category)
+      .reduce((acc, { id_list }) => {
+        return acc.concat(id_list);
+      }, []);
+
+    const randomIndex = Math.floor(Math.random()*combinedAnswers.length);
+    const randomAnswer = combinedAnswers[randomIndex];
+
+    if (randomAnswer) {
+      this.get('router')
+        .transitionTo('questions.card', { id: randomAnswer });
+    }
   }
 
   didInsertElement(...params) {

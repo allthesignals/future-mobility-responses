@@ -347,3 +347,8 @@ ul li {
   font-size: 20px;
   transform: translate(-75%, 0);
 }
+
+.card-padding {
+  width: 100%;
+  pointer-events: all;
+}

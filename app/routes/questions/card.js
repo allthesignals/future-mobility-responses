@@ -6,7 +6,7 @@ const { host } = environment;
 
 export default class QuestionsCardRoute extends Route {
   model({ id }) {
-    return fetch(`${host}/responses/?format=json&q=${id}`)
+    return fetch(`${host}/responses/${id}`)
       .then(blob => blob.json());
   }
 }

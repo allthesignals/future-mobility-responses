@@ -1,16 +1,17 @@
 <div class="questions-container">
   <div class="animation-flex">
+    {{link-to '' 'application' class='card-padding' tagName='div'}}
     {{#animated-container}}
       {{#animated-value model
         initialInsertion=true
         use=transition
         duration=duration}}
         <div class="answer-card-container">
-          {{!-- <img src={{concat host model.back}} /> --}}
-          <img src="https://loremflickr.com/320/240"/>
+          <img src={{concat host model.back}} />
         </div>
       {{/animated-value}}
     {{/animated-container}}
+    {{link-to '' 'application' class='card-padding' tagName='div'}}
   </div>
 </div>
 
