@@ -57,11 +57,13 @@ export default class CDDLVisualization extends Component {
   questionCounts;
 
   handleClick(index, category) {
-    const { id } = categoryLookup
-      .find((cat, index) => index === category);
+    console.log(...arguments);
+    // TODO: route to a real id
+    // const { id } = categoryLookup
+    //   .find((cat, index) => index === category);
 
-    this.get('router')
-      .transitionTo('questions.card', id, Math.random());
+    // this.get('router')
+    //   .transitionTo('questions.card', id);
   }
 
   didInsertElement(...params) {

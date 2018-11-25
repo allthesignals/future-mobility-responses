@@ -16,7 +16,7 @@ export const CATEGORIES = [
   'robots',
   'time',
 ].map((cat, index) => {
-  return { label: cat, id: index + 2 };
+  return { label: cat, id: index + 3 };
 });
 
 @classNames('cddl-navigation')

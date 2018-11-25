@@ -17,9 +17,7 @@
   {{#ember-wormhole to='answer-type-labels'}}
     <div class="labels">
       {{#each labelCenters as |label|}}
-        <div class="label" style="left: {{label.x}}px; top: {{label.y}}px;">
-          {{label.a_text}}
-        </div>
+        {{answer-type-label label=label}}
       {{/each}}
     </div>
   {{/ember-wormhole}}

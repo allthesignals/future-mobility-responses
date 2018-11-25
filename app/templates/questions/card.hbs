@@ -1,5 +1,16 @@
-<div class="answer-card-container">
-  <img src={{concat host model.back}} />
+<div class="questions-container">
+  <div class="animation-flex">
+    {{#animated-container}}
+      {{#animated-value model
+        initialInsertion=true
+        use=transition
+        duration=duration}}
+        <div class="answer-card-container">
+          <img src={{concat host model.back}} />
+        </div>
+      {{/animated-value}}
+    {{/animated-container}}
+  </div>
 </div>
 
 {{outlet}}
