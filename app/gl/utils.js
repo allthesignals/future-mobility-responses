@@ -218,7 +218,7 @@ const columnsLayout = (instances, w, h, categories, proportions, horizontal=true
 }
 
 const singleQuestionLayout = () => {
-  
+
 }
 
 const packFunc = pack();
@@ -228,13 +228,10 @@ const computePackLayoutCenters = (answers, w, h) => {
   //First, construct hierarchy object from answers array
   const rootNode = hierarchy({
     name: 'root',
-    children: answers.map((d,i) => ({
-      name: `child node ${i}`,
-      value: d
-    }))
+    children: answers
   });
 
-  rootNode.sum(node => node.value);
+  rootNode.sum(node => node.count);
 
   packFunc.size([w, h]);
 
