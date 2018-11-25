@@ -4,7 +4,10 @@ import { service } from '@ember-decorators/service';
 import { mapBy } from '@ember-decorators/object/computed';
 import { classNames } from '@ember-decorators/component';
 import { CATEGORIES as categoryLookup } from './cddl-navigation';
+import d3 from 'd3';
 import GLModule from '../gl';
+
+const { nest } = d3;
 
 const INSTANCES = 3000;
 const RADIAL = 0.3;
@@ -16,8 +19,37 @@ export default class CDDLVisualization extends Component {
   @service
   router;
 
-  @mapBy('questionCounts', 'total')
-  proportions;
+  // @mapBy('questionCounts', 'total')
+  // proportions;
+
+  @computed('questionCounts.{questions,answers}')
+  get proportions() {
+    const { questions, answers: answerObjects } = this.get('questionCounts');
+
+    return nest()
+      .key(d => d.q_id)
+      .entries(answerObjects)
+      .map(grouped => {
+        const { key } = grouped;
+        const { values: answers } = grouped;
+        const [{ q_id, q_text }] = answers;
+        const { total } = questions.find(({ q }) => q === q_id);
+
+        return {
+          q_id,
+          q_text,
+          total,
+          answers: answers.map(({ a_id, a_text, id_list, total: count }) => {
+            return {
+              a_id,
+              a_text,
+              id_list,
+              count,
+            };
+          })
+        };
+      });
+  }
 
   questionCounts;
 
@@ -39,7 +71,7 @@ export default class CDDLVisualization extends Component {
     super.didInsertElement(...params);
 
     const container = this.element.querySelector('.gl-container');
-    const PROPORTIONS = this.get('proportions');
+    const SCHEMA = this.get('proportions');
     const canvas = container.appendChild(document.createElement('canvas'));
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
@@ -48,7 +80,7 @@ export default class CDDLVisualization extends Component {
     const glModule = GLModule(gl, canvas)
       .setSize([canvas.width, canvas.height])
       .setInstances(INSTANCES)
-      .setProportions(PROPORTIONS)
+      .setSchema(SCHEMA)
       .setMotionRadial(RADIAL)
       .setMotionAngular(ANGULAR)
       .setDecay(DECAY)
