@@ -16,7 +16,7 @@ export const CATEGORIES = [
   'robots',
   'time',
 ].map((cat, index) => {
-  return { label: cat, id: index + 2 };
+  return { label: cat, id: index + 3 };
 });
 
 @classNames('cddl-navigation')
@@ -26,6 +26,8 @@ export default class CddlNavigationComponent extends Component {
   isSortedByCategory;
 
   visualization;
+
+  labelCenters;
 
   opened = false;
 
@@ -37,9 +39,8 @@ export default class CddlNavigationComponent extends Component {
   @action
   showCat(id) {
     this.get('visualization')
-      .showCat(id, (centers) => {
-        console.log(centers);
-        this.set('labelCenters', centers);
+      .showCat(id, (nodes) => {
+        this.set('labelCenters', nodes);
       });
   }
 
