@@ -19,9 +19,6 @@ export default class CDDLVisualization extends Component {
   @service
   router;
 
-  // @mapBy('questionCounts', 'total')
-  // proportions;
-
   @computed('questionCounts.{questions,answers}')
   get proportions() {
     const { questions, answers: answerObjects } = this.get('questionCounts');

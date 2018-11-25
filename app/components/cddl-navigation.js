@@ -25,11 +25,22 @@ export default class CddlNavigationComponent extends Component {
 
   isSortedByCategory;
 
+  visualization;
+
   opened = false;
 
   @action
   handleToggleClick() {
     this.toggleProperty('isSortedByCategory');
+  }
+
+  @action
+  showCat(id) {
+    this.get('visualization')
+      .showCat(id, (centers) => {
+        console.log(centers);
+        this.set('labelCenters', centers);
+      });
   }
 
   init(...args) {
@@ -94,29 +105,8 @@ export default class CddlNavigationComponent extends Component {
     jQuery("#circle-nav-wrapper").circleNav();
 
     jQuery("#toggle").click(() => {
-      // jQuery("#pie_color").toggleClass('hidden');
-      // jQuery(".answer-container").addClass('hidden');
-      // jQuery(".container").removeClass('hidden');
-      // jQuery('.card-placeholder').addClass('hidden');
       jQuery('.answer-container div').removeClass('selected');
       jQuery("#car-container div").removeClass('container-shift');
     });
-    // jQuery('.circle-nav-item').click(() => {
-      // jQuery('.container').addClass('hidden');
-      // jQuery('.card-placeholder').addClass('hidden');
-      // jQuery('.answer-container div').removeClass('selected');
-      // jQuery("#car-container div").removeClass('container-shift');
-    // });
-    // jQuery('#car').click(() => {
-    //   jQuery('.answer-container').addClass('hidden');
-    //   jQuery('#car-container').toggleClass('hidden');
-    // });
-    // jQuery("#car-container div").click(() => {
-    //   jQuery("#car-container div").addClass('container-shift');
-    //   jQuery("#car-container div").removeClass('selected');
-    //   jQuery('.card-placeholder').addClass('hidden');
-    //   jQuery('#car-cards').delay( 800 ).removeClass('hidden');
-    //   jQuery(this).addClass('selected');
-    // });
   }
 }

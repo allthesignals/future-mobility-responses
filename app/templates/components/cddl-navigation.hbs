@@ -5,9 +5,10 @@
   <div class="circle-nav-panel"></div>
   <ul class="circle-nav-menu">
     {{#each categories as |category index|}}
-      {{#link-to 'questions' category.id}}
-        <li class="circle-nav-item circle-nav-item-{{index}}" id={{category.label}}></li>
-      {{/link-to}}
+      <li class="circle-nav-item circle-nav-item-{{index}}"
+        id={{category.label}}
+        {{action 'showCat' category.id}}>
+      </li>
     {{/each}}
   </ul>
 </nav>
