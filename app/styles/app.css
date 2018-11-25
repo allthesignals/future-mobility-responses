@@ -290,6 +290,7 @@ ul li {
   top: 0;
   color: white;
   text-align: center;
+  pointer-events: none;
 }
 
 .answer-container {
@@ -315,6 +316,7 @@ ul li {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  height: 100%;
 }
 
 .response-rectangle:hover {
@@ -343,4 +345,5 @@ ul li {
   font-family: 'Overpass', sans-serif;
   color: white;
   font-size: 20px;
+  transform: translate(-75%, 0);
 }

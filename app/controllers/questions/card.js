@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import environment from '../../config/environment';
-import opacity from 'ember-animated/motions/opacity';
+import scale from 'ember-animated/motions/scale';
 
 const { host } = environment;
 
@@ -8,16 +8,10 @@ export default class QuestionsCardController extends Controller {
   host = host;
 
   transition = function* ({ insertedSprites, receivedSprites, removedSprites }) {
-    insertedSprites.forEach(sprite => {
-      opacity(sprite, { from: 0, to: 1 });
-    });
+    insertedSprites.forEach(scale);
 
-    receivedSprites.forEach(sprite => {
-      opacity(sprite, { from: 0,  to: 1 });
-    });
+    receivedSprites.forEach(scale);
 
-    removedSprites.forEach(sprite => {
-      opacity(sprite, { from: 1, to: 0 });
-    });
+    removedSprites.forEach(scale);
   }
 }
