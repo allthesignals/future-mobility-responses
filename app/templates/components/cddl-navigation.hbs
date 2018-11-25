@@ -14,13 +14,13 @@
 </nav>
 
 {{#if isSortedByCategory}}
-  <div>
-    {{#ember-wormhole to='answer-type-labels'}}
+  {{#ember-wormhole to='answer-type-labels'}}
+    <div class="labels">
       {{#each labelCenters as |label|}}
-        <div style="left: {{label.x}}px; top: {{label.y}}px;">
-          Label!
+        <div class="label" style="left: {{label.x}}px; top: {{label.y}}px;">
+          {{label.a_text}}
         </div>
       {{/each}}
-    {{/ember-wormhole}}
-  </div>
+    </div>
+  {{/ember-wormhole}}
 {{/if}}
