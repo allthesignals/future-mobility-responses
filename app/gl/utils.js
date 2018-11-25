@@ -217,7 +217,32 @@ const columnsLayout = (instances, w, h, categories, proportions, horizontal=true
 
 }
 
-const singleQuestionLayout = () => {
+const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) => {
+  console.group('Single question layout');
+  console.log(categories);
+  console.log(currentCat);
+  console.log(answers);
+
+  console.groupEnd();
+
+  return Array.from({length:instances})
+    .map((d,i) => {
+      const cat = categories[i]?categories[i]:0;
+      if(cat === currentCat){
+        //These cards are in the current category
+        return [
+          Math.random()*w,
+          Math.random()*h
+        ]
+      }else{
+        //These cards are not in the current category, and are hidden
+        return [
+          -w,
+          -h
+        ]
+      }
+    })
+    .reduce((acc,v) => acc.concat(v), []);
 
 }
 
@@ -243,6 +268,7 @@ const computePackLayoutCenters = (answers, w, h) => {
 export {
   pieLayout,
   columnsLayout,
+  singleQuestionLayout,
   computePackLayoutCenters,
 }
 
