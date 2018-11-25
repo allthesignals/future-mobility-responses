@@ -5,10 +5,22 @@
   <div class="circle-nav-panel"></div>
   <ul class="circle-nav-menu">
     {{#each categories as |category index|}}
-      <li class="circle-nav-item circle-nav-item-{{index}}"
+      <li class="circle-nav-item circle-nav-item-{{add index 1}}"
         id={{category.label}}
         {{action 'showCat' category.id}}>
       </li>
     {{/each}}
   </ul>
 </nav>
+
+{{#if isSortedByCategory}}
+  <div>
+    {{#ember-wormhole to='answer-type-labels'}}
+      {{#each labelCenters as |label|}}
+        <div style="left: {{label.x}}px; top: {{label.y}}px;">
+          Label!
+        </div>
+      {{/each}}
+    {{/ember-wormhole}}
+  </div>
+{{/if}}

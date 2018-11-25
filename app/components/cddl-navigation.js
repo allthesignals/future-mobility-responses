@@ -27,6 +27,8 @@ export default class CddlNavigationComponent extends Component {
 
   visualization;
 
+  labelCenters;
+
   opened = false;
 
   @action
@@ -37,9 +39,8 @@ export default class CddlNavigationComponent extends Component {
   @action
   showCat(id) {
     this.get('visualization')
-      .showCat(id, (centers) => {
-        console.log(centers);
-        this.set('labelCenters', centers);
+      .showCat(id, (nodes) => {
+        this.set('labelCenters', nodes);
       });
   }
 
