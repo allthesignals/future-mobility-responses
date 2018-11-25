@@ -16,7 +16,8 @@ import {
   initVAOs,
   generateShuffledCategories,
   pieLayout,
-  columnsLayout
+  columnsLayout,
+  computePackLayoutCenters
 } from './utils';
 
 import {
@@ -39,6 +40,7 @@ function GLModule(gl){
   let sourceIdx = 0;
   let _categories = generateShuffledCategories(_proportions, _instances);
   let _byCat = false;
+  let _currentCat = null;
 
   //Initialize shaders and gl context upon module creation
   const vertexShader = compileShader(gl, vs, gl.VERTEX_SHADER);
@@ -165,6 +167,29 @@ function GLModule(gl){
   exports.separateByCat = function(_){
     _byCat = _;
     _updateOffsetBuffer(buffers, _byCat, false);
+    return this;
+  }
+
+  exports.showCat = function(_, cb){
+    _currentCat = _;
+
+    //Get schema for _currentCat
+    //TODO: waiting for API response
+    const responsesInCat = [5, 6, 7, 8, 10, 2];
+    const centers = computePackLayoutCenters(
+        responsesInCat,
+        _w,
+        _h
+      );
+    console.group('Compute pack layout');
+    console.log(centers);
+    console.groupEnd();
+
+    //Emit centers to callback
+    cb(centers);
+
+    _updateOffsetBuffer(buffers, _byCat, false);
+
     return this;
   }
 

@@ -8,7 +8,7 @@ import{
   PICKING_COLOR_LOCATION
 } from './config';
 
-import {pie, randomNormal, max, scaleLinear} from 'd3';
+import {pie, randomNormal, max, scaleLinear, pack, hierarchy} from 'd3';
 
 
 //GL utilities
@@ -217,8 +217,35 @@ const columnsLayout = (instances, w, h, categories, proportions, horizontal=true
 
 }
 
+const singleQuestionLayout = () => {
+  
+}
+
+const packFunc = pack();
+const computePackLayoutCenters = (answers, w, h) => {
+  //answers: array of numbers of responses to one question
+
+  //First, construct hierarchy object from answers array
+  const rootNode = hierarchy({
+    name: 'root',
+    children: answers.map((d,i) => ({
+      name: `child node ${i}`,
+      value: d
+    }))
+  });
+
+  rootNode.sum(node => node.value);
+
+  packFunc.size([w, h]);
+
+  return packFunc(rootNode);
+}
+
+
+
 export {
   pieLayout,
-  columnsLayout
+  columnsLayout,
+  computePackLayoutCenters,
 }
 
