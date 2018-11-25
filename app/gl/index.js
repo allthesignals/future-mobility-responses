@@ -17,6 +17,7 @@ import {
   generateShuffledCategories,
   pieLayout,
   columnsLayout,
+  singleQuestionLayout,
   computePackLayoutCenters
 } from './utils';
 
@@ -32,16 +33,18 @@ function GLModule(gl){
   //Private variables
   let _w = 800, _h = 600;
   let _instances = 10;
-  let _proportions = [1,1,1,1,1,1,1,1,1,1];
-  let _schema = null;
   let _motion_decay = 0.009;
   let _motion_random = 0.5;
   let _motion_angular = 1.0;
   let _motion_radial = 1.0;
   let sourceIdx = 0;
+  
+  let _schema = null;
+  let _proportions = [1,1,1,1,1,1,1,1,1,1]; //derived from _schema
+  //category: 0 based index of each question
   let _categories = generateShuffledCategories(_proportions, _instances);
-  let _byCat = false;
   let _currentCat = null;
+  let _byCat = false;
 
   //Initialize shaders and gl context upon module creation
   const vertexShader = compileShader(gl, vs, gl.VERTEX_SHADER);
@@ -174,23 +177,26 @@ function GLModule(gl){
     return this;
   }
 
-  exports.showCat = function(_, cb){
-    _currentCat = _;
-
+  exports.showCat = function(q_id, cb){
     //Get schema for _currentCat
-    const q = _schema.filter(d => d.q_id === _currentCat)[0];
+    const q = _schema.filter(d => d.q_id === q_id)[0];
     if(!q){
-      console.error(`Question with the q_id ${_} cannot be found in the schema`);
+      console.error(`Question with the q_id ${q_id} cannot be found in the schema`);
       return;
     }
+    _currentCat = _schema.indexOf(q);
     const answers = q.answers;
     const centers = computePackLayoutCenters(
         answers,
         _w,
         _h
       );
-    console.group('Compute pack layout');
-    console.log(centers.descendants().filter(d => d.depth > 0));
+
+    console.group(`GLModule:showCat:q_id=${q_id} && _currentCat=${_currentCat}` );
+    console.log(_schema);
+    console.log(_currentCat);
+    console.log(_categories);
+    console.log(_proportions);
     console.groupEnd();
 
     //Emit centers to callback
@@ -200,7 +206,13 @@ function GLModule(gl){
       .map(d => Object.assign({}, d.data, {x: d.x, y: d.y}))
     );
 
-    _updateOffsetBuffer(buffers, _byCat, false);
+    //Reset the initOffset
+    _updateOffsetBuffer(
+      buffers, 
+      _byCat, 
+      false,
+      _currentCat
+    );
 
     return this;
   }
@@ -349,15 +361,20 @@ function GLModule(gl){
     });
   }
 
-  function _updateOffsetBuffer(buffers, byCategory=false, refresh=true){
+  function _updateOffsetBuffer(buffers, byCategory=false, refresh=true, singleCat=null){
     const rand = randomNormal(.3,.2);
 
     let offsets;
-    if(byCategory){
-      //cards are separated by category
+
+    if(Number.isInteger(singleCat)){
+      //show single category view
+      offsets = new Float32Array( singleQuestionLayout(_instances, _w, _h, _categories, _currentCat, _schema[_currentCat].answers));
+    }
+    else if(byCategory){
+      //show all categories, but segmented by category
       offsets = new Float32Array( pieLayout(_instances, _w, _h, _categories, _proportions) );
     }else{
-      //cards are all mixed up in this case
+      //show all cards, mixed up
       offsets = new Float32Array( pieLayout(_instances, _w, _h) );
     }
 
