@@ -236,8 +236,12 @@ const computePackLayoutCenters = (answers, w, h) => {
 
 const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) => {
   
-  const answerClusters = computePackLayoutCenters(answers, w, h)
-    .descendants()
+  const nodes = computePackLayoutCenters(answers, w, h)
+    .descendants();
+
+  const {r:maxR} = nodes.filter(d => d.depth === 0)[0];
+
+  const answerClusters = nodes
     .filter(d => d.depth > 0)
     .map(d => {
       return Array.from({length:d.value})
@@ -251,6 +255,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
     .reduce((acc,v) => acc.concat(v), []); //length of this array == number of raw answers
 
   console.group('Single question layout');
+  console.log(maxR);
   console.log(categories);
   console.log(currentCat);
   console.log(answerClusters);
@@ -258,7 +263,14 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
 
   //Instantiate an array of 3000 cards with random values
   const cards = Array.from({length:instances})
-    .map(d => [-w, -h]);
+    .map(d => {
+      const theta = Math.random()*Math.PI*2;
+
+      return [
+        w/2 + maxR * Math.cos(theta)*1.5,
+        h/2 + maxR * Math.sin(theta)*1.5
+      ]
+    });
 
   //For those cards in the currentCat, position in pack layout
   cards.filter((d,i) => categories[i] === currentCat)
@@ -267,7 +279,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
 
       //This circle will be placed in a circle centered at (x,y), with radius r
       const theta = Math.random()*Math.PI*2;
-      const _r = Math.random()*r/2;
+      const _r = Math.random()*.75*r;
 
       d[0] = x + _r * Math.cos(theta);
       d[1] = y + _r * Math.sin(theta);
