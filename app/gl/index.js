@@ -178,19 +178,27 @@ function GLModule(gl){
     _currentCat = _;
 
     //Get schema for _currentCat
-    //TODO: waiting for API response
-    const responsesInCat = [5, 6, 7, 8, 10, 2];
+    const q = _schema.filter(d => d.q_id === _currentCat)[0];
+    if(!q){
+      console.error(`Question with the q_id ${_} cannot be found in the schema`);
+      return;
+    }
+    const answers = q.answers;
     const centers = computePackLayoutCenters(
-        responsesInCat,
+        answers,
         _w,
         _h
       );
     console.group('Compute pack layout');
-    console.log(centers);
+    console.log(centers.descendants().filter(d => d.depth > 0));
     console.groupEnd();
 
     //Emit centers to callback
-    cb(centers);
+    cb(centers
+      .descendants()
+      .filter(d => d.depth > 0)
+      .map(d => Object.assign({}, d.data, {x: d.x, y: d.y}))
+    );
 
     _updateOffsetBuffer(buffers, _byCat, false);
 
