@@ -33,6 +33,7 @@ function GLModule(gl){
   let _w = 800, _h = 600;
   let _instances = 10;
   let _proportions = [1,1,1,1,1,1,1,1,1,1];
+  let _schema = null;
   let _motion_decay = 0.009;
   let _motion_random = 0.5;
   let _motion_angular = 1.0;
@@ -155,8 +156,11 @@ function GLModule(gl){
     return this;
   }
 
-  exports.setProportions = function(_){
-    _proportions = _;
+  exports.setSchema = function(_){
+    console.log(_);
+    _schema = _;
+    _proportions = _schema.map(d => d.total);
+    
     //Regenerate categories whenever _proportions or _instances update
     _categories = generateShuffledCategories(_proportions, _instances);
     _updateColorBuffer(buffers);
