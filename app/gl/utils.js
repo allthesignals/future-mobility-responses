@@ -217,35 +217,6 @@ const columnsLayout = (instances, w, h, categories, proportions, horizontal=true
 
 }
 
-const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) => {
-  console.group('Single question layout');
-  console.log(categories);
-  console.log(currentCat);
-  console.log(answers);
-
-  console.groupEnd();
-
-  return Array.from({length:instances})
-    .map((d,i) => {
-      const cat = categories[i]?categories[i]:0;
-      if(cat === currentCat){
-        //These cards are in the current category
-        return [
-          Math.random()*w,
-          Math.random()*h
-        ]
-      }else{
-        //These cards are not in the current category, and are hidden
-        return [
-          -w,
-          -h
-        ]
-      }
-    })
-    .reduce((acc,v) => acc.concat(v), []);
-
-}
-
 const packFunc = pack();
 const computePackLayoutCenters = (answers, w, h) => {
   //answers: array of numbers of responses to one question
@@ -262,6 +233,51 @@ const computePackLayoutCenters = (answers, w, h) => {
 
   return packFunc(rootNode);
 }
+
+const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) => {
+  
+  const answerClusters = computePackLayoutCenters(answers, w, h)
+    .descendants()
+    .filter(d => d.depth > 0)
+    .map(d => {
+      return Array.from({length:d.value})
+        .map(v => ({
+          r:d.r,
+          x:d.x,
+          y:d.y,
+          a_id:d.data.a_id
+        }))
+    })
+    .reduce((acc,v) => acc.concat(v), []); //length of this array == number of raw answers
+
+  console.group('Single question layout');
+  console.log(categories);
+  console.log(currentCat);
+  console.log(answerClusters);
+  console.groupEnd();
+
+  //Instantiate an array of 3000 cards with random values
+  const cards = Array.from({length:instances})
+    .map(d => [-w, -h]);
+
+  //For those cards in the currentCat, position in pack layout
+  cards.filter((d,i) => categories[i] === currentCat)
+    .forEach((d,i) => {
+      const {x, y, r, a_id} = answerClusters[i%answerClusters.length];
+
+      //This circle will be placed in a circle centered at (x,y), with radius r
+      const theta = Math.random()*Math.PI*2;
+      const _r = Math.random()*r/2;
+
+      d[0] = x + _r * Math.cos(theta);
+      d[1] = y + _r * Math.sin(theta);
+    })
+
+  return cards
+    .reduce((acc,v) => acc.concat(v), []);
+
+}
+
 
 
 
