@@ -70,7 +70,7 @@ export default class CDDLVisualization extends Component {
 
     if (randomAnswer) {
       this.get('router')
-        .transitionTo('questions.card', { id: randomAnswer });
+        .transitionTo('questions.card', randomAnswer);
     }
   }
 
