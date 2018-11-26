@@ -3,9 +3,10 @@
     <i class="material-icons">add</i>
   </div>
   <div class="circle-nav-panel"></div>
-  <ul class="circle-nav-menu">
+  <ul class="circle-nav-menu" style="width: 50%;">
     {{#each categories as |category index|}}
       <li class="circle-nav-item circle-nav-item-{{add index 1}}"
+        style={{safe-style (hash right=(concat category.x 'px') bottom=(concat category.y 'px'))}}
         id={{category.label}}
         {{action 'showCat' category.id}}>
       </li>

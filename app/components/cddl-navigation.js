@@ -3,25 +3,24 @@ import jQuery from 'jquery';
 import { action } from '@ember-decorators/object';
 import { classNames } from '@ember-decorators/component';
 
-// css name map. TODO: refactor to be data-driven
-export const CATEGORIES = [
-  'car',
-  'commute',
-  'people',
-  'environ',
-  'safety',
-  'ethics',
-  'money',
-  'time',
-  'robots',
-  'time',
-].map((cat, index) => {
-  return { label: cat, id: index + 3 };
-});
+const pointsAlongArc = (startAngle = 0, endAngle = Math.PI, r, n) => {
+  //startAngle: starting point of the arc
+  //endAngle: end point of the arc
+  //default is a 180 degree arc (= Math.PI radians)
+  
+  const ARC_LENGTH = endAngle - startAngle;
+  
+  const thetas = Array.from({length:n})
+    .map((d,i) => i/(n-1) * ARC_LENGTH);
+  
+  //return value will be a n-element array, where each element is a two element array [x,y]
+  //Note that this [x,y] is relative to the center of the arc
+  return thetas.map(theta => [r*Math.cos(theta), r*Math.sin(theta)]);
+}
 
 @classNames('cddl-navigation')
 export default class CddlNavigationComponent extends Component {
-  categories = CATEGORIES;
+  categories = [];
 
   isSortedByCategory;
 
@@ -109,5 +108,32 @@ export default class CddlNavigationComponent extends Component {
       jQuery('.answer-container div').removeClass('selected');
       jQuery("#car-container div").removeClass('container-shift');
     });
+
+    const { clientWidth } = this.element;
+
+    const labelCenters = pointsAlongArc(0, Math.PI, clientWidth/4, 10);
+
+    // css name map. TODO: refactor to be data-driven
+    const CATEGORIES = [
+      'car',
+      'commute',
+      'people',
+      'environ',
+      'safety',
+      'ethics',
+      'money',
+      'time',
+      'robots',
+      'time',
+    ].map((cat, index) => {
+      return {
+        label: cat, 
+        id: index + 3, 
+        x: Math.floor(labelCenters[index][0]), 
+        y: Math.floor(labelCenters[index][1]) * 0.5,
+      };
+    });
+
+    this.set('categories', CATEGORIES);
   }
 }
