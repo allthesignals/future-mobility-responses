@@ -130,7 +130,7 @@ export default class CddlNavigationComponent extends Component {
         label: cat, 
         id: index + 3, 
         x: Math.floor(labelCenters[index][0]), 
-        y: Math.floor(labelCenters[index][1]) * 0.5,
+        y: Math.floor(labelCenters[index][1]),
       };
     });
 
