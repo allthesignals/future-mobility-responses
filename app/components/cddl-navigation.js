@@ -5,18 +5,18 @@ import { classNames } from '@ember-decorators/component';
 
 // css name map. TODO: refactor to be data-driven
 export const CATEGORIES = [
-  'car',
-  'commute',
-  'people',
-  'environ',
-  'safety',
-  'ethics',
-  'money',
-  'time',
-  'robots',
-  'time',
-].map((cat, index) => {
-  return { label: cat, id: index + 3 };
+  ['car', 'In 2040, the average person will...'],
+  ['commute', 'My preferred transport mode(s) in 2040 will be...'],
+  ['people', 'In 2040, everyone will have access to...'],
+  ['environ', 'In 2040...'],
+  ['safety', 'Travel in the future will be more dangerous for...'],
+  ['ethics', 'Responsibility for autonomous vehicle accidents belongs to...'],
+  ['money', 'In the future, my transportation costs will...'],
+  ['time', 'In 2040, commuting will take...'],
+  ['equity', 'The future of mobility will make the world...'],
+  ['jobs', 'Future mobility options will have the greatest impact on...'],
+].map(([cat, question], index) => {
+  return { label: cat, question, id: index + 3 };
 });
 
 @classNames('cddl-navigation')

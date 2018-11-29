@@ -18,7 +18,9 @@
     <div class="labels">
       {{#if currentCategory}}
         <div class="question">
-          <div>Question {{currentCategory}}</div>
+          {{#with (find-by 'id' currentCategory categories) as |question|}} 
+            <div>{{question.question}}</div>
+          {{/with}}
         </div>
       {{/if}}
       {{#each labelCenters as |label|}}
