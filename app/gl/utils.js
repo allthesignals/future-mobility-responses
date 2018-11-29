@@ -5,7 +5,8 @@ import{
   COLOR_LOCATION,
   AGE_LOCATION,
   INIT_OFFSET_LOCATION,
-  PICKING_COLOR_LOCATION
+  PICKING_COLOR_LOCATION,
+  PICKING_POSITION_LOCATION
 } from './config';
 
 import {pie, randomNormal, max, scaleLinear, pack, hierarchy} from 'd3';
@@ -61,7 +62,7 @@ const initVAOs = gl => {
   for(let i = 0; i < vaos.length; i++){
     const vao = vaos[i];
     const tf = tfs[i];
-    buffers[i] = new Array(7);
+    buffers[i] = new Array(8);
     const buffer = buffers[i];
 
     //Set up VAO i.e. buffer state
@@ -114,6 +115,11 @@ const initVAOs = gl => {
     gl.enableVertexAttribArray(PICKING_COLOR_LOCATION);
     gl.vertexAttribDivisor(PICKING_COLOR_LOCATION, 1);
 
+    buffer[PICKING_POSITION_LOCATION] = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer[PICKING_POSITION_LOCATION]);
+    gl.vertexAttribPointer(PICKING_POSITION_LOCATION, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(PICKING_POSITION_LOCATION);
+
     gl.bindVertexArray(null);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
@@ -164,10 +170,13 @@ export {
 const rand = randomNormal(.3, .2);
 
 const pieLayout = (instances, w, h, categories, proportions) => {
+
+  const diameter = Math.min(w, h);
+
   if(!categories){
     return Array
       .from({length:instances})
-      .map(() => [(rand() + 0.5)*h/2, Math.random()*Math.PI*2])
+      .map(() => [(rand() + 0.5)*diameter/2, Math.random()*Math.PI*2])
       .map(([r, theta]) => [r * Math.cos(theta)+w/2, r * Math.sin(theta)+h/2])
       .reduce((acc,v) => acc.concat(v), [])
   }else{
@@ -178,7 +187,7 @@ const pieLayout = (instances, w, h, categories, proportions) => {
         const cat = categories[i]?categories[i]:0;
         const {startAngle, endAngle} = proportionAngles[cat]; 
         const angle = startAngle + Math.random()*(endAngle - startAngle);
-        const r = (rand() + 0.5)*h/2;
+        const r = (rand() + 0.5)*diameter/2;
         return [r, angle];
       })
       .map(([r, theta]) => [r * Math.cos(theta)+w/2, r * Math.sin(theta)+h/2])
@@ -239,7 +248,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
   const nodes = computePackLayoutCenters(answers, w, h)
     .descendants();
 
-  const {r:maxR} = nodes.filter(d => d.depth === 0)[0];
+  const {r:maxR} = nodes.filter(d => d.depth === 0)[0]; //the size of the outer bounding circle
 
   const answerClusters = nodes
     .filter(d => d.depth > 0)
@@ -279,7 +288,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
 
       //This circle will be placed in a circle centered at (x,y), with radius r
       const theta = Math.random()*Math.PI*2;
-      const _r = Math.random()*.75*r;
+      const _r = Math.random()*.68*r;
 
       d[0] = x + _r * Math.cos(theta);
       d[1] = y + _r * Math.sin(theta);

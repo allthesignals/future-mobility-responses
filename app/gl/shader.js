@@ -5,7 +5,8 @@ import {
   COLOR_LOCATION,
   AGE_LOCATION,
   INIT_OFFSET_LOCATION,
-  PICKING_COLOR_LOCATION
+  PICKING_COLOR_LOCATION,
+  PICKING_POSITION_LOCATION
 } from './config';
 
 const vs = `#version 300 es
@@ -16,6 +17,7 @@ const vs = `#version 300 es
   #define AGE_LOCATION ${AGE_LOCATION}
   #define INIT_OFFSET_LOCATION ${INIT_OFFSET_LOCATION}
   #define PICKING_COLOR_LOCATION ${PICKING_COLOR_LOCATION}
+  #define PICKING_POSITION_LOCATION ${PICKING_POSITION_LOCATION}
 
   #define M_2PI 6.28318530718
 
@@ -25,6 +27,7 @@ const vs = `#version 300 es
   uniform float u_w;
   uniform float u_h;
   uniform float u_usePickingColor;
+  uniform float u_usePickingPosition;
 
   layout(location = OFFSET_LOCATION) in vec2 a_offset;
   layout(location = ROTATION_LOCATION) in float a_rotation;
@@ -32,6 +35,7 @@ const vs = `#version 300 es
   layout(location = COLOR_LOCATION) in vec3 a_color;
   layout(location = AGE_LOCATION) in float a_age;
   layout(location = PICKING_COLOR_LOCATION) in vec3 a_picking_color;
+  layout(location = PICKING_POSITION_LOCATION) in vec2 a_picking_position;
 
   out vec3 v_color;
   out float v_alpha;
@@ -46,6 +50,9 @@ const vs = `#version 300 es
     );
 
     vec2 position = rot * a_position + a_offset;
+    if(u_usePickingPosition > 0.0){
+      position = rot * a_picking_position + a_offset;
+    }
     position = vec2(
       position.x / u_w * 2.0 - 1.0,
       1.0 - position.y / u_h * 2.0

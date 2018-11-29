@@ -7,7 +7,8 @@ import {
   COLOR_LOCATION,
   AGE_LOCATION,
   INIT_OFFSET_LOCATION,
-  PICKING_COLOR_LOCATION
+  PICKING_COLOR_LOCATION,
+  PICKING_POSITION_LOCATION
 } from './config';
 
 import {
@@ -34,7 +35,7 @@ function GLModule(gl){
   let _w = 800, _h = 600;
   let _instances = 10;
   let _motion_decay = 0.009;
-  let _motion_random = 0.5;
+  let _motion_random = 0.15;
   let _motion_angular = 1.0;
   let _motion_radial = 1.0;
   let sourceIdx = 0;
@@ -58,6 +59,7 @@ function GLModule(gl){
   const uWLocation = gl.getUniformLocation(program, 'u_w');
   const uHLocation = gl.getUniformLocation(program, 'u_h');
   const uUsePickingColorLocation = gl.getUniformLocation(program, 'u_usePickingColor');
+  const uUsePickingPositionLocation = gl.getUniformLocation(program, 'u_usePickingPosition');
   const tf_uTimeLocation = gl.getUniformLocation(tfProgram, 'u_time');
   const tf_uWLocation = gl.getUniformLocation(tfProgram, 'u_w');
   const tf_uHLocation = gl.getUniformLocation(tfProgram, 'u_h');
@@ -218,6 +220,7 @@ function GLModule(gl){
   }
 
   exports.onClick = function(cb, target){
+
     //Implement mousepicking logic here, and invoke callback function
     target.addEventListener('click', function(e){
       //Basic logic
@@ -225,7 +228,9 @@ function GLModule(gl){
       gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer); //render to off screen framebuffer
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.useProgram(program);
+      gl.disable(gl.BLEND);
       gl.uniform1f(uUsePickingColorLocation, 1.0); //render pass does not use pickingColor
+      gl.uniform1f(uUsePickingPositionLocation, 1.0);
       gl.bindVertexArray(vaos[sourceIdx]);
       gl.vertexAttribDivisor(OFFSET_LOCATION, 1);
       gl.vertexAttribDivisor(ROTATION_LOCATION, 1);
@@ -240,9 +245,15 @@ function GLModule(gl){
       //Re-construct the id of the card, and emit callback
       const index = ( pixels[0] << 16 ) | ( pixels[1] << 8 ) | ( pixels[2] );
 
+      console.group('GLModule:click');
+
       if(index){
+        console.log(`Card index ${index} was clicked on`);
+        console.log(`Card category is ${_categories[index]}`);
         cb(index, _categories[index]);
       }
+
+      console.groupEnd();
     });
     return this;
   }
@@ -281,8 +292,10 @@ function GLModule(gl){
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, null); //render to screen
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.BLEND);
     gl.useProgram(program);
     gl.uniform1f(uUsePickingColorLocation, 0.0); //render pass does not use pickingColor
+    gl.uniform1f(uUsePickingPositionLocation, 0.0); //render pass does not use pickingLocation
     gl.bindVertexArray(vaos[sourceIdx]);
     gl.vertexAttribDivisor(OFFSET_LOCATION, 1);
     gl.vertexAttribDivisor(ROTATION_LOCATION, 1);
@@ -332,16 +345,28 @@ function GLModule(gl){
 
   function _updatePositionBuffer(buffers){
     const positions = new Float32Array([
-      6.0, 3.5,
-      -6.0, 3.5,
-      -6.0, -3.5,
-      -6.0, -3.5,
-      6.0, -3.5,
-      6.0, 3.5
+      4.8, 2.8,
+      -4.8, 2.8,
+      -4.8, -2.8,
+      -4.8, -2.8,
+      4.8, -2.8,
+      4.8, 2.8
     ]); //triangular vertices of each instance
+
+    const pickingPositions = new Float32Array([
+      12.0, 12.0,
+      -12.0, 12.0,
+      -12.0, -12.0,
+      -12.0, -12.0,
+      12.0, -12.0,
+      12.0, 12.0
+    ]); //triangular vertices for the invisible picking target. Twice as large
+
     buffers.forEach(buffer => {
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer[POSITION_LOCATION]);
       gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer[PICKING_POSITION_LOCATION]);
+      gl.bufferData(gl.ARRAY_BUFFER, pickingPositions, gl.STATIC_DRAW);
     });
   }
 
