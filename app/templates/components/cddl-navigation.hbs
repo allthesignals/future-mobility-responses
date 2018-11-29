@@ -16,6 +16,11 @@
 {{#if isSortedByCategory}}
   {{#ember-wormhole to='answer-type-labels'}}
     <div class="labels">
+      {{#if currentCategory}}
+        <div class="question">
+          <div>Question {{currentCategory}}</div>
+        </div>
+      {{/if}}
       {{#each labelCenters as |label|}}
         {{answer-type-label label=label}}
       {{/each}}

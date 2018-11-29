@@ -29,11 +29,17 @@ export default class CddlNavigationComponent extends Component {
 
   labelCenters;
 
+  currentCategory = null;
+
   opened = false;
 
   @action
   handleToggleClick() {
     this.toggleProperty('isSortedByCategory');
+    if (this.get('labelCenters').length) {
+      this.set('labelCenters', []);
+      this.set('currentCategory', null);
+    }
   }
 
   @action
@@ -42,6 +48,8 @@ export default class CddlNavigationComponent extends Component {
       .showCat(id, (nodes) => {
         this.set('labelCenters', nodes);
       });
+
+    this.set('currentCategory', id);
   }
 
   init(...args) {
