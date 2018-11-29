@@ -176,7 +176,7 @@ const pieLayout = (instances, w, h, categories, proportions) => {
   if(!categories){
     return Array
       .from({length:instances})
-      .map(() => [(rand() + 0.5)*diameter/2, Math.random()*Math.PI*2])
+      .map(() => [(rand() + 0.35)*diameter/2, Math.random()*Math.PI*2])
       .map(([r, theta]) => [r * Math.cos(theta)+w/2, r * Math.sin(theta)+h/2])
       .reduce((acc,v) => acc.concat(v), [])
   }else{
@@ -187,7 +187,7 @@ const pieLayout = (instances, w, h, categories, proportions) => {
         const cat = categories[i]?categories[i]:0;
         const {startAngle, endAngle} = proportionAngles[cat]; 
         const angle = startAngle + Math.random()*(endAngle - startAngle);
-        const r = (rand() + 0.5)*diameter/2;
+        const r = (rand() + 0.35)*diameter/2;
         return [r, angle];
       })
       .map(([r, theta]) => [r * Math.cos(theta)+w/2, r * Math.sin(theta)+h/2])
