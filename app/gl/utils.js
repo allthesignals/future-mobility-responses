@@ -164,10 +164,13 @@ export {
 const rand = randomNormal(.3, .2);
 
 const pieLayout = (instances, w, h, categories, proportions) => {
+
+  const diameter = Math.min(w, h);
+
   if(!categories){
     return Array
       .from({length:instances})
-      .map(() => [(rand() + 0.5)*h/2, Math.random()*Math.PI*2])
+      .map(() => [(rand() + 0.5)*diameter/2, Math.random()*Math.PI*2])
       .map(([r, theta]) => [r * Math.cos(theta)+w/2, r * Math.sin(theta)+h/2])
       .reduce((acc,v) => acc.concat(v), [])
   }else{
@@ -178,7 +181,7 @@ const pieLayout = (instances, w, h, categories, proportions) => {
         const cat = categories[i]?categories[i]:0;
         const {startAngle, endAngle} = proportionAngles[cat]; 
         const angle = startAngle + Math.random()*(endAngle - startAngle);
-        const r = (rand() + 0.5)*h/2;
+        const r = (rand() + 0.5)*diameter/2;
         return [r, angle];
       })
       .map(([r, theta]) => [r * Math.cos(theta)+w/2, r * Math.sin(theta)+h/2])
@@ -239,7 +242,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
   const nodes = computePackLayoutCenters(answers, w, h)
     .descendants();
 
-  const {r:maxR} = nodes.filter(d => d.depth === 0)[0];
+  const {r:maxR} = nodes.filter(d => d.depth === 0)[0]; //the size of the outer bounding circle
 
   const answerClusters = nodes
     .filter(d => d.depth > 0)
@@ -279,7 +282,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
 
       //This circle will be placed in a circle centered at (x,y), with radius r
       const theta = Math.random()*Math.PI*2;
-      const _r = Math.random()*.75*r;
+      const _r = Math.random()*.68*r;
 
       d[0] = x + _r * Math.cos(theta);
       d[1] = y + _r * Math.sin(theta);

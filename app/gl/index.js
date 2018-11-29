@@ -34,7 +34,7 @@ function GLModule(gl){
   let _w = 800, _h = 600;
   let _instances = 10;
   let _motion_decay = 0.009;
-  let _motion_random = 0.5;
+  let _motion_random = 0.15;
   let _motion_angular = 1.0;
   let _motion_radial = 1.0;
   let sourceIdx = 0;
@@ -332,12 +332,12 @@ function GLModule(gl){
 
   function _updatePositionBuffer(buffers){
     const positions = new Float32Array([
-      6.0, 3.5,
-      -6.0, 3.5,
-      -6.0, -3.5,
-      -6.0, -3.5,
-      6.0, -3.5,
-      6.0, 3.5
+      5.0, 3.0,
+      -5.0, 3.0,
+      -5.0, -3.0,
+      -5.0, -3.0,
+      5.0, -3.0,
+      5.0, 3.0
     ]); //triangular vertices of each instance
     buffers.forEach(buffer => {
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer[POSITION_LOCATION]);
