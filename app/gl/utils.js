@@ -5,7 +5,8 @@ import{
   COLOR_LOCATION,
   AGE_LOCATION,
   INIT_OFFSET_LOCATION,
-  PICKING_COLOR_LOCATION
+  PICKING_COLOR_LOCATION,
+  PICKING_POSITION_LOCATION
 } from './config';
 
 import {pie, randomNormal, max, scaleLinear, pack, hierarchy} from 'd3';
@@ -61,7 +62,7 @@ const initVAOs = gl => {
   for(let i = 0; i < vaos.length; i++){
     const vao = vaos[i];
     const tf = tfs[i];
-    buffers[i] = new Array(7);
+    buffers[i] = new Array(8);
     const buffer = buffers[i];
 
     //Set up VAO i.e. buffer state
@@ -113,6 +114,11 @@ const initVAOs = gl => {
     gl.vertexAttribPointer(PICKING_COLOR_LOCATION, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(PICKING_COLOR_LOCATION);
     gl.vertexAttribDivisor(PICKING_COLOR_LOCATION, 1);
+
+    buffer[PICKING_POSITION_LOCATION] = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer[PICKING_POSITION_LOCATION]);
+    gl.vertexAttribPointer(PICKING_POSITION_LOCATION, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(PICKING_POSITION_LOCATION);
 
     gl.bindVertexArray(null);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
