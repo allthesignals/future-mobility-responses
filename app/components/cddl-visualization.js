@@ -16,6 +16,20 @@ const DECAY = 0.009;
 
 @classNames('cddl-visualization')
 export default class CDDLVisualization extends Component {
+  constructor(...args) {
+    super(...args);
+
+    this.addObserver('router.currentRouteName', () => {
+      const glModule = this.get('glModule');
+      const currentRouteName = this.get('router.currentRouteName');
+      const lastRoute = this.get('lastRoute');
+
+      if (currentRouteName == 'index') {
+        glModule.unHighlight();
+      }
+    });
+  }
+
   @service
   router;
 
