@@ -3,24 +3,25 @@ import jQuery from 'jquery';
 import { action } from '@ember-decorators/object';
 import { classNames } from '@ember-decorators/component';
 
-const pointsAlongArc = (startAngle = 0, endAngle = Math.PI, r, n) => {
-  //startAngle: starting point of the arc
-  //endAngle: end point of the arc
-  //default is a 180 degree arc (= Math.PI radians)
-  
-  const ARC_LENGTH = endAngle - startAngle;
-  
-  const thetas = Array.from({length:n})
-    .map((d,i) => i/(n-1) * ARC_LENGTH);
-  
-  //return value will be a n-element array, where each element is a two element array [x,y]
-  //Note that this [x,y] is relative to the center of the arc
-  return thetas.map(theta => [r*Math.cos(theta), r*Math.sin(theta)]);
-}
+// css name map. TODO: refactor to be data-driven
+export const CATEGORIES = [
+  ['car', 'In 2040, the average person will...'],
+  ['commute', 'My preferred transport mode(s) in 2040 will be...'],
+  ['people', 'In 2040, everyone will have access to...'],
+  ['environ', 'In 2040...'],
+  ['safety', 'Travel in the future will be more dangerous for...'],
+  ['ethics', 'Responsibility for autonomous vehicle accidents belongs to...'],
+  ['money', 'In the future, my transportation costs will...'],
+  ['time', 'In 2040, commuting will take...'],
+  ['equity', 'The future of mobility will make the world...'],
+  ['jobs', 'Future mobility options will have the greatest impact on...'],
+].map(([cat, question], index) => {
+  return { label: cat, question, id: index + 3 };
+});
 
 @classNames('cddl-navigation')
 export default class CddlNavigationComponent extends Component {
-  categories = [];
+  categories = CATEGORIES;
 
   isSortedByCategory;
 
@@ -28,11 +29,17 @@ export default class CddlNavigationComponent extends Component {
 
   labelCenters;
 
+  currentCategory = null;
+
   opened = false;
 
   @action
   handleToggleClick() {
     this.toggleProperty('isSortedByCategory');
+    if (this.get('labelCenters').length) {
+      this.set('labelCenters', []);
+      this.set('currentCategory', null);
+    }
   }
 
   @action
@@ -41,6 +48,8 @@ export default class CddlNavigationComponent extends Component {
       .showCat(id, (nodes) => {
         this.set('labelCenters', nodes);
       });
+
+    this.set('currentCategory', id);
   }
 
   init(...args) {
@@ -108,32 +117,5 @@ export default class CddlNavigationComponent extends Component {
       jQuery('.answer-container div').removeClass('selected');
       jQuery("#car-container div").removeClass('container-shift');
     });
-
-    const { clientWidth } = this.element;
-
-    const labelCenters = pointsAlongArc(0, Math.PI, clientWidth/4, 10);
-
-    // css name map. TODO: refactor to be data-driven
-    const CATEGORIES = [
-      'car',
-      'commute',
-      'people',
-      'environ',
-      'safety',
-      'ethics',
-      'money',
-      'time',
-      'robots',
-      'time',
-    ].map((cat, index) => {
-      return {
-        label: cat, 
-        id: index + 3, 
-        x: Math.floor(labelCenters[index][0]), 
-        y: Math.floor(labelCenters[index][1]),
-      };
-    });
-
-    this.set('categories', CATEGORIES);
   }
 }

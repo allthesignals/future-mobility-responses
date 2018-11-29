@@ -3,10 +3,9 @@
     <i class="material-icons">add</i>
   </div>
   <div class="circle-nav-panel"></div>
-  <ul class="circle-nav-menu" style="width: 50%;">
+  <ul class="circle-nav-menu">
     {{#each categories as |category index|}}
       <li class="circle-nav-item circle-nav-item-{{add index 1}}"
-        style={{safe-style (hash right=(concat category.x 'px') bottom=(concat category.y 'px'))}}
         id={{category.label}}
         {{action 'showCat' category.id}}>
       </li>
@@ -17,6 +16,13 @@
 {{#if isSortedByCategory}}
   {{#ember-wormhole to='answer-type-labels'}}
     <div class="labels">
+      {{#if currentCategory}}
+        <div class="question">
+          {{#with (find-by 'id' currentCategory categories) as |question|}} 
+            <div>{{question.question}}</div>
+          {{/with}}
+        </div>
+      {{/if}}
       {{#each labelCenters as |label|}}
         {{answer-type-label label=label}}
       {{/each}}

@@ -125,7 +125,7 @@ ul li {
      box-shadow: 0px -20px 30px #000000;
  }
  .circle-nav-wrapper .circle-nav-menu {
-    /*width: 250px;*/
+    width: 250px;
     height: 250px
 }
  .circle-nav-wrapper .circle-nav-menu .circle-nav-item {
@@ -160,7 +160,7 @@ ul li {
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-4,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-5
  {
-    /*right:*/ 250px;
+    right: 250px;
     bottom: 500px;
 }
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-6,
@@ -169,7 +169,7 @@ ul li {
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-9,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-10 {
   bottom:500px;
-  /*right:*/250px;
+  right:250px;
 }
  .circle-nav-wrapper .circle-nav-menu .circle-nav-item ul.sublist {
     font-size:12px;
@@ -218,43 +218,43 @@ ul li {
 .circle-nav-item-9 {background-image:url('../img/9.png');}
 .circle-nav-item-10 {background-image:url('../img/10.png');}
  .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-1 {
-    /*left: 7.5%;*/
+    left: 7.5%;
     transition-delay: .1s;
 }
  .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-2 {
-    /*left: 15%;*/
+    left: 15%;
     transition-delay: .2s
 }
  .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-3 {
-    /*left: 22.5%;*/
+    left: 22.5%;
     transition-delay: .3s
 }
  .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-4 {
-    /*left: 30%;*/
+    left: 30%;
     transition-delay: .4s
 }
  .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-5 {
-    /*left: 37.5%;*/
+    left: 37.5%;
     transition-delay: .5s
 }
 .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-6 {
-    /*right: 37.5%;*/
+    right: 37.5%;
     transition-delay: .6s
 }
 .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-7 {
-    /*right: 30%;*/
+    right: 30%;
     transition-delay: .7s
 }
 .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-8 {
-    /*right:22.5%;*/
+    right:22.5%;
     transition-delay: .8s
 }
 .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-9 {
-    /*right: 15%;*/
+    right: 15%;
     transition-delay: .9s
 }
 .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item.circle-nav-item-10 {
-    /*right: 7.5%;*/
+    right: 7.5%;
     transition-delay: 1s
 }
 @keyframes spin {
@@ -353,11 +353,19 @@ ul li {
   pointer-events: all;
 }
 
-.circle-nav-item {
-  position: absolute;
+.question {
+  color: white;
+  top: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: row;
 }
 
-.circle-nav-menu {
-  position: absolute;
+.card-container {
+  width: 100%;
+}
+
+.card-container img {
   width: 100%;
 }
