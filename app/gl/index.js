@@ -245,15 +245,11 @@ function GLModule(gl){
       //Re-construct the id of the card, and emit callback
       const index = ( pixels[0] << 16 ) | ( pixels[1] << 8 ) | ( pixels[2] );
 
-      console.group('GLModule:click');
-
       if(index){
-        console.log(`Card index ${index} was clicked on`);
-        console.log(`Card category is ${_categories[index]}`);
         cb(index, _categories[index]);
+        _updateColorBuffer(buffers, index);
       }
 
-      console.groupEnd();
     });
     return this;
   }
@@ -284,6 +280,10 @@ function GLModule(gl){
     gl.useProgram(tfProgram);
     gl.uniform1f(tf_uRadialSpeed, _motion_radial);
     return this;
+  }
+
+  exports.unHighlight = function(){
+    _updateColorBuffer(buffers, null);
   }
 
   //Private methods
@@ -370,16 +370,36 @@ function GLModule(gl){
     });
   }
 
-  function _updateColorBuffer(buffers){
-    const colors = new Float32Array(
-      Array
-        .from({length:_instances})
-        .map((d,i) => {
-          const cat = _categories[i]?_categories[i]:0; //between 0 and 9
-          return [COLOR_RAMP[cat*3], COLOR_RAMP[cat*3+1], COLOR_RAMP[cat*3+2]];
-        })
-        .reduce((acc,v) => acc.concat(v), [])
-    );
+  function _updateColorBuffer(buffers, highlightIndex=null){
+    let colors;
+
+    if(Number.isInteger(highlightIndex)){
+      //colors should highlight a specific index
+      colors = new Float32Array(
+        Array
+          .from({length:_instances})
+          .map((d,i) => {
+            const cat = _categories[i]?_categories[i]:0; //between 0 and 9
+            if(i === highlightIndex){
+              return [COLOR_RAMP[cat*3], COLOR_RAMP[cat*3+1], COLOR_RAMP[cat*3+2]];
+            }
+            return [COLOR_RAMP[cat*3]*.2, COLOR_RAMP[cat*3+1]*.2, COLOR_RAMP[cat*3+2]*.2];
+          })
+          .reduce((acc,v) => acc.concat(v), [])
+      );
+
+    }else{
+      //don't highlight a specific index
+      colors = new Float32Array(
+        Array
+          .from({length:_instances})
+          .map((d,i) => {
+            const cat = _categories[i]?_categories[i]:0; //between 0 and 9
+            return [COLOR_RAMP[cat*3], COLOR_RAMP[cat*3+1], COLOR_RAMP[cat*3+2]];
+          })
+          .reduce((acc,v) => acc.concat(v), [])
+      );
+    }
     buffers.forEach(buffer => {
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer[COLOR_LOCATION]);
       gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
