@@ -203,7 +203,7 @@ ul li {
     cursor: pointer;
 }
 .circle-nav-wrapper .circle-nav-menu.circle-nav-open .circle-nav-item {
-    font-size: 1.4em;
+    font-size: 0.5rem;
     /*bottom:10px;*/
     opacity:1;
 }
@@ -299,7 +299,11 @@ ul li {
 }
 
 .answer-card-container {
-  width: 100%;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
 
 .responses-by-type-visualization {
@@ -344,8 +348,8 @@ ul li {
   position: absolute;
   font-family: 'Overpass', sans-serif;
   color: white;
-  font-size: 20px;
-  transform: translate(-75%, 0);
+  font-size: 16px;
+  transform: translate(-50%, -50%);
 }
 
 .card-padding {
@@ -354,7 +358,10 @@ ul li {
 }
 
 .question {
+  font-family: 'Overpass', sans-serif;
   color: white;
+  font-size: 24px;
+  margin: 16px;
   top: 0;
   display: flex;
   align-content: center;
