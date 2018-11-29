@@ -89,7 +89,7 @@ export default class CddlNavigationComponent extends Component {
               c.stop().toggleClass("circle-nav-open");
               a.stop().toggleClass("circle-nav-open");
               n.stop().toggleClass("circle-nav-open");
-              jQuery(".circle-nav-overlay").fadeToggle();
+              // jQuery(".circle-nav-overlay").fadeToggle();
 
               if (jQuery("body").css("overflow")) {
                 jQuery("body, html").css("overflow", "")
