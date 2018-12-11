@@ -44,7 +44,7 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {
+  if (environment === 'gh-pages') {
     ENV['rootURL'] = '/future-mobility-responses';
     // here you can enable a production-specific feature
   }

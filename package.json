@@ -16,7 +16,8 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "deploy": "ember build --environment production && ember github-pages:commit --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\" && git push origin gh-pages:gh-pages"
+    "deploy-staging": "ember build --environment gh-pages && ember github-pages:commit --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\" && git push origin gh-pages:gh-pages",
+    "deploy": "ember build -e production && scp -r dist/* $USERNAME@nextstop.mit.edu:/home/mitcivicdata/webapps/nextstop_ember_application"
   },
   "devDependencies": {
     "@ember-decorators/babel-transforms": "^2.0.0",
@@ -32,6 +33,9 @@
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^6.16.0",
     "ember-cli-dependency-checker": "^3.0.0",
+    "ember-cli-deploy": "1.0.2",
+    "ember-cli-deploy-build": "1.1.1",
+    "ember-cli-deploy-scp": "1.0.12",
     "ember-cli-eslint": "^4.2.3",
     "ember-cli-github-pages": "0.2.1",
     "ember-cli-htmlbars": "^3.0.0",
