@@ -4,8 +4,8 @@
   </div>
   <div class="circle-nav-panel"></div>
   <ul class="circle-nav-menu">
-    {{#each categories as |category index|}}
-      <li class="circle-nav-item circle-nav-item-{{add index 1}}"
+    {{#each categories as |category|}}
+      <li class="circle-nav-item circle-nav-item-{{category.classId}}"
         id={{category.label}}
         {{action 'showCat' category.id}}>
       </li>
