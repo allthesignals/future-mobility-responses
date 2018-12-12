@@ -376,14 +376,14 @@ ul li {
   font-weight: 700;
 */  
   color: #161616;  
-  font-size: 18px;
+  font-size: 24px;
   padding: 8px 5px;
   overflow: hidden;
   white-space: nowrap;
 
   /*This will center the element */
   position:absolute;
-  top:50%;
+  top:16%;
   left:50%;
   transform: translateX(-50%);
 
