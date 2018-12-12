@@ -9,6 +9,8 @@ body > .ember-view {
   height: 100%;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:900');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700');
 
 @font-face {
   font-family: 'Material Icons';
@@ -370,19 +372,41 @@ ul li {
 .question {
   font-weight: 900;
   font-family: 'Roboto', sans-serif;
-  color: white;  
-  font-size: 40px;
-  text-align:center;
-  margin: 10vh 0 0 50vw;
+/*  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+*/  
+  color: #161616;  
+  font-size: 18px;
+  padding: 8px 5px;
+  overflow: hidden;
+  white-space: nowrap;
+
+  /*This will center the element */
+  position:absolute;
+  top:50%;
+  left:50%;
   transform: translateX(-50%);
-  top: 0;
-  width:58vw;
+
+  /*Color*/
+  mix-blend-mode: screen;
+  background:#eee;
+
+  /*width:58vw;*/
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: row;
   
 }
+
+.question::before{
+  content:"“ ";
+}
+
+.question::after{
+  content:" „";
+}
+
 
 .card-container {
   width: 100%;
