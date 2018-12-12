@@ -44,6 +44,7 @@ function GLModule(gl){
   let _proportions = [1,1,1,1,1,1,1,1,1,1]; //derived from _schema
   //category: 0 based index of each question
   let _categories = generateShuffledCategories(_proportions, _instances);
+  let _colors = COLOR_RAMP;
   let _currentCat = null;
   let _byCat = false;
 
@@ -170,6 +171,14 @@ function GLModule(gl){
     _categories = generateShuffledCategories(_proportions, _instances);
     _updateColorBuffer(buffers);
     _updateOffsetBuffer(buffers, _byCat, false);
+    return this;
+  }
+
+  exports.setColors = function(_){
+    console.log(_);
+    _colors = _;
+    _updateColorBuffer(buffers);
+
     return this;
   }
 
@@ -381,9 +390,9 @@ function GLModule(gl){
           .map((d,i) => {
             const cat = _categories[i]?_categories[i]:0; //between 0 and 9
             if(i === highlightIndex){
-              return [COLOR_RAMP[cat*3], COLOR_RAMP[cat*3+1], COLOR_RAMP[cat*3+2]];
+              return [_colors[cat*3], _colors[cat*3+1], _colors[cat*3+2]];
             }
-            return [COLOR_RAMP[cat*3]*.2, COLOR_RAMP[cat*3+1]*.2, COLOR_RAMP[cat*3+2]*.2];
+            return [_colors[cat*3]*.2, _colors[cat*3+1]*.2, _colors[cat*3+2]*.2];
           })
           .reduce((acc,v) => acc.concat(v), [])
       );
@@ -395,7 +404,7 @@ function GLModule(gl){
           .from({length:_instances})
           .map((d,i) => {
             const cat = _categories[i]?_categories[i]:0; //between 0 and 9
-            return [COLOR_RAMP[cat*3], COLOR_RAMP[cat*3+1], COLOR_RAMP[cat*3+2]];
+            return [_colors[cat*3], _colors[cat*3+1], _colors[cat*3+2]];
           })
           .reduce((acc,v) => acc.concat(v), [])
       );

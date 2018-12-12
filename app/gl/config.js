@@ -21,16 +21,17 @@ export {
 
 //Global constants for the visualization
 const COLOR_RAMP = [
-  125, 0, 46,  // cars
-  213, 29, 82,  // equity (scale)
-  0, 65, 107,  // time
-  51, 114, 169,  // people
-  241, 93, 42,  // robot
-  223, 199, 35,  // bus driver
   0, 122, 102,  // ???
-  77, 183, 72,  // money
-  105, 44, 122,  // landscape
+  125, 0, 46,  // cars
+
+  51, 114, 169,  // people
+  105, 44, 122,  // environ
   220, 100, 156, // 
+  213, 29, 82,  // ethics
+  77, 183, 72,  // money
+  0, 65, 107,  // time
+  241, 93, 42,  // equity
+  223, 199, 35,  // jobs
 ].map(d => d/255);
 
 export {

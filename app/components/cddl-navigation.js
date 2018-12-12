@@ -1,32 +1,15 @@
 import Component from '@ember/component';
 import jQuery from 'jquery';
 import { action } from '@ember-decorators/object';
+import { service } from '@ember-decorators/service';
 import { classNames } from '@ember-decorators/component';
-
-// css name map. TODO: refactor to be data-driven
-export const CATEGORIES = [
-  [1, 'car', 'In 2040, the average person will...', 5],
-  [2, 'commute', 'My preferred transport mode(s) in 2040 will be...', 4],
-  [3, 'people', 'In 2040, everyone will have access to...', 8],
-  [4, 'environ', 'In 2040...', 13],
-  [5, 'safety', 'Travel in the future will be more dangerous for...', 14],
-  [6, 'ethics', 'Responsibility for autonomous vehicle accidents belongs to...', 6],
-  [7, 'money', 'In the future, my transportation costs will...', 10],
-  [8, 'time', 'In 2040, commuting will take...', 7],
-  [9, 'equity', 'The future of mobility will make the world...', 9],
-  [10, 'jobs', 'Future mobility options will have the greatest impact on...', 12],
-].map(([classId, cat, question, id]) => {
-  return {
-    classId,
-    label: cat,
-    question,
-    id,
-  };
-});
 
 @classNames('cddl-navigation')
 export default class CddlNavigationComponent extends Component {
-  categories = CATEGORIES;
+  @service
+  router;
+
+  categories;
 
   isSortedByCategory;
 
@@ -55,6 +38,7 @@ export default class CddlNavigationComponent extends Component {
       });
 
     this.set('currentCategory', id);
+    this.get('router').transitionTo('index');
   }
 
   init(...args) {
