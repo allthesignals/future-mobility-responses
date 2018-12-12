@@ -371,14 +371,18 @@ ul li {
 .question {
   font-weight: 900;
   font-family: 'Roboto', sans-serif;
-  color: white;
-  font-size: 24px;
-  margin: 16px;
+  color: white;  
+  font-size: 40px;
+  text-align:center;
+  margin: 10vh 0 0 50vw;
+  transform: translateX(-50%);
   top: 0;
+  width:58vw;
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: row;
+  
 }
 
 .card-container {
