@@ -159,11 +159,7 @@ ul li {
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-2,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-3,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-4,
-.circle-nav-wrapper .circle-nav-menu .circle-nav-item-5
- {
-    right: 250px;
-    bottom: 10px;
-}
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-5,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-6,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-7,
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-8,
@@ -171,6 +167,18 @@ ul li {
 .circle-nav-wrapper .circle-nav-menu .circle-nav-item-10 {
   bottom:10px;
   right:250px;
+}
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-1.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-2.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-3.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-4.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-5.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-6.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-7.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-8.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-9.active,
+.circle-nav-wrapper .circle-nav-menu .circle-nav-item-10.active{
+  bottom:60px;
 }
  .circle-nav-wrapper .circle-nav-menu .circle-nav-item ul.sublist {
     font-size:12px;
@@ -362,14 +370,18 @@ ul li {
 .question {
   font-weight: 900;
   font-family: 'Roboto', sans-serif;
-  color: white;
-  font-size: 24px;
-  margin: 16px;
+  color: white;  
+  font-size: 40px;
+  text-align:center;
+  margin: 10vh 0 0 50vw;
+  transform: translateX(-50%);
   top: 0;
+  width:58vw;
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: row;
+  
 }
 
 .card-container {
