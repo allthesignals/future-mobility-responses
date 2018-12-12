@@ -415,3 +415,15 @@ ul li {
 .card-container img {
   width: 100%;
 }
+
+.close-button {
+  position: absolute;
+  bottom: 15%;
+  z-index: 999999;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.close-button > .material-icons {
+  font-size: 50px;
+}
