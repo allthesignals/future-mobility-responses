@@ -38,7 +38,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: black !important;
-    font-family: 'Overpass', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 ul {
@@ -346,7 +346,7 @@ ul li {
 
 .label {
   position: absolute;
-  font-family: 'Overpass', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: white;
   font-size: 16px;
   transform: translate(-50%, -50%);
@@ -358,7 +358,7 @@ ul li {
 }
 
 .question {
-  font-family: 'Overpass', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: white;
   font-size: 24px;
   margin: 16px;
