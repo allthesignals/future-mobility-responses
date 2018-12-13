@@ -3,9 +3,8 @@ import { computed } from '@ember-decorators/object';
 import { service } from '@ember-decorators/service';
 import { mapBy } from '@ember-decorators/object/computed';
 import { classNames } from '@ember-decorators/component';
-// import { CATEGORIES as categoryLookup } from './cddl-navigation';
+import { timeout, task } from 'ember-concurrency';
 import GLModule from '../gl';
-
 
 const INSTANCES = 3000;
 const RADIAL = 0.3;
@@ -13,13 +12,17 @@ const ANGULAR = 0.4;
 const DECAY = 0.009;
 
 @classNames('cddl-visualization')
-export default class CDDLVisualization extends Component {
+class CDDLVisualization extends Component {
   constructor(...args) {
     super(...args);
+
+    this.get('reloadTimer').perform();
 
     this.addObserver('router.currentRouteName', () => {
       const glModule = this.get('glModule');
       const currentRouteName = this.get('router.currentRouteName');
+
+      this.get('reloadTimer').perform();
 
       if (currentRouteName === 'index') {
         console.log('is lowering lights...');
@@ -38,6 +41,12 @@ export default class CDDLVisualization extends Component {
   visualizationEnabled;
 
   glModule;
+
+  // any click event
+  click() {
+    // click event
+    this.get('reloadTimer').perform();
+  }
 
   handleClick(index, cat_index) {
     // TODO: route to a real id
@@ -106,3 +115,13 @@ export default class CDDLVisualization extends Component {
     this.set('_isSortedByCategory', boolean);
   }
 }
+
+Object.defineProperty(CDDLVisualization.prototype, 'reloadTimer', {
+  value: task(function* () {
+    yield timeout(3000);
+
+    window.location.reload();
+  }).restartable(),
+});
+
+export default CDDLVisualization;
