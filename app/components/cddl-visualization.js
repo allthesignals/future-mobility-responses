@@ -34,6 +34,8 @@ class CDDLVisualization extends Component {
   @service
   router;
 
+  maxIdleTime = 300000;
+
   proportions;
 
   questionCounts;
@@ -118,7 +120,7 @@ class CDDLVisualization extends Component {
 
 Object.defineProperty(CDDLVisualization.prototype, 'reloadTimer', {
   value: task(function* () {
-    yield timeout(3000);
+    yield timeout(this.get('maxIdleTime'));
 
     window.location.reload();
   }).restartable(),
