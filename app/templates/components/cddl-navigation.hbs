@@ -5,7 +5,7 @@
   <div class="circle-nav-panel"></div>
   <ul class="circle-nav-menu">
     {{#each categories as |category|}}
-      <li class="circle-nav-item circle-nav-item-{{category.classId}}"
+      <li class="circle-nav-item circle-nav-item-{{category.classId}} {{if (eq category.q_id currentCategory) 'active' ''}}"
         id={{category.label}}
         {{action 'showCat' category.q_id}}>
       </li>
