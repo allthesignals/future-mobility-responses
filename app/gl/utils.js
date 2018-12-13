@@ -288,7 +288,7 @@ const singleQuestionLayout = (instances, w, h, categories, currentCat, answers) 
 
       //This circle will be placed in a circle centered at (x,y), with radius r
       const theta = Math.random()*Math.PI*2;
-      const _r = Math.random()*.68*r;
+      const _r = Math.random()*.5*r;
 
       d[0] = x + _r * Math.cos(theta);
       d[1] = y + _r * Math.sin(theta);
