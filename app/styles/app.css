@@ -383,7 +383,7 @@ ul li {
 
   /*This will center the element */
   position:absolute;
-  top:16%;
+  bottom:16%;
   left:50%;
   transform: translateX(-50%);
 
@@ -398,15 +398,6 @@ ul li {
   flex-direction: row;
   
 }
-
-.question::before{
-  content:"“ ";
-}
-
-.question::after{
-  content:" „";
-}
-
 
 .card-container {
   width: 100%;
